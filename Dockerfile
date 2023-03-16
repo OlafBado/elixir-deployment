@@ -38,9 +38,12 @@ RUN mix release
 
 #---------- app stage --------------
 FROM alpine:3.14.2 AS app
+
 ARG MIX_ENV
 # install runtime dependencies
-RUN apk add --no-cache libstdc++ openssl ncurses-libs WORKDIR "/home/elixir/app"
+RUN apk add --no-cache libstdc++ openssl ncurses-libs
+
+WORKDIR "/home/elixir/app"
 # Create  unprivileged user to run the release
 RUN \
     addgroup \
@@ -50,7 +53,8 @@ RUN \
     -s /bin/sh \
     -u 1000 \
     -G "elixir" \
-    -h "/home/elixir" \ -D "elixir" \
+    -h "/home/elixir" \ 
+    -D "elixir" \
     && su "elixir"
 # run as user
 USER "elixir"
