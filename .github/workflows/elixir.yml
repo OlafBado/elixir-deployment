@@ -60,5 +60,5 @@ jobs:
               login $HEROKU_EMAIL
               password $HEROKU_API_KEY
           EOF
-      - run: heroku git:remote -a $(basename $GITHUB_REPOSITORY)
+      - run: heroku git:remote -a lit-spire-32171
       - run: git push heroku main  
