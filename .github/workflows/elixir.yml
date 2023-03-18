@@ -9,7 +9,7 @@ jobs:
   build:
 
     name: Build and test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     services:
       db:
@@ -24,9 +24,9 @@ jobs:
           --health-retries 5
 
     steps:
-    - uses: actions/checkout@v3
     - name: Set up Elixir
-      uses: actions/setup-elixir@v1
+    - uses: actions/checkout@v3
+    - uses: erlef/setup-beam@v1
       with:
         elixir-version: '1.12' # Define the elixir version [required]
         otp-version: '24.1' # Define the OTP version [required]
