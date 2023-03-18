@@ -49,4 +49,4 @@ jobs:
           heroku_app_name: lit-spire-32171
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
-          remote_branch: master
+          branch: main
