@@ -4,7 +4,6 @@ on: push
 
 env:
   MIX_ENV: test
-  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
 jobs:
   build:
@@ -41,3 +40,25 @@ jobs:
       run: mix deps.get
     - name: Run tests
       run: mix test
+
+  release:
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+    runs-on: ubuntu-latest
+
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - run: |+
+          cat >~/.netrc <<EOF
+          machine api.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_KEY
+          machine git.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_KEY
+          EOF
+      - run: heroku git:remote -a $(basename $GITHUB_REPOSITORY)
+      - run: git push heroku main  
