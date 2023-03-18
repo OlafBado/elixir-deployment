@@ -41,8 +41,8 @@ jobs:
 
   release:
     env:
-      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+      HEROKU_API_KEY: ${{ env.HEROKU_API_KEY }}
+      HEROKU_EMAIL: ${{ env.HEROKU_EMAIL }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
