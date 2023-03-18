@@ -54,5 +54,4 @@ jobs:
           usedocker: true
           justlogin: true
           stack: container
-
-       - run: heroku auth:whoami
+      - run: heroku auth:whoami
