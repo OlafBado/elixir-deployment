@@ -46,19 +46,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: |+
-          cat >~/.netrc <<EOF
-          machine api.heroku.com
-            login $HEROKU_EMAIL
-            password $HEROKU_API_KEY
-          machine git.heroku.com
-            login $HEROKU_EMAIL
-            password $HEROKU_API_KEY
-          EOF
       - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
         with:
           heroku_api_key: $HEROKU_API_KEY
           heroku_app_name: lit-spire-32171
           heroku_email: $HEROKU_EMAIL
           usedocker: true
-          branch: main
+          justlogin: true
