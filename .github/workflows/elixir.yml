@@ -7,10 +7,8 @@ env:
 
 jobs:
   build:
-
     name: Build and test
     runs-on: ubuntu-20.04
-
     services:
       db:
         image: postgres:12
@@ -42,6 +40,7 @@ jobs:
       run: mix test
 
   release:
+    runs-on: ubuntu-20.04
     env:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
