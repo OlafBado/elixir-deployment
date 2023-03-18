@@ -55,8 +55,4 @@ jobs:
           justlogin: true
           stack: container
 
-      - name: "Login to heroku registry"
-        run: heroku container:login
-
-      - name: "Push"
-        run: git push heroku main
+       - run: heroku auth:whoami
