@@ -54,4 +54,4 @@ jobs:
           usedocker: true
           justlogin: true
           stack: container
-      - run: heroku auth:whoami
+      - run: echo "$HEROKU_API_KEY"
