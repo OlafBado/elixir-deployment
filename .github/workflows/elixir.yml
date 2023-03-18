@@ -45,20 +45,11 @@ jobs:
     env:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-    runs-on: ubuntu-latest
-
-    needs: build
-
     steps:
-      - uses: actions/checkout@v1.0.0
-      - run: |+
-          cat >~/.netrc <<EOF
-          machine api.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-          machine git.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-          EOF
-      - run: heroku git:remote -a lit-spire-32171
-      - run: git push heroku main:refs/heads/main
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
+        with:
+          heroku_api_key: $HEROKU_API_KEY
+          heroku_app_name: lit-spire-32171
+          heroku_email: $HEROKU_EMAIL
+          usedocker: true
