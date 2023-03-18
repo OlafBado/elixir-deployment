@@ -4,6 +4,7 @@ on: push
 
 env:
   MIX_ENV: test
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
 jobs:
   build:
