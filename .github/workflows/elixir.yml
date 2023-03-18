@@ -52,6 +52,4 @@ jobs:
           heroku_app_name: lit-spire-32171
           heroku_email: $HEROKU_EMAIL
           usedocker: true
-          justlogin: true
           stack: container
-      - run: echo "$HEROKU_API_KEY"
