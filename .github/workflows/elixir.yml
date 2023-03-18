@@ -52,4 +52,11 @@ jobs:
           heroku_app_name: lit-spire-32171
           heroku_email: $HEROKU_EMAIL
           usedocker: true
+          justlogin: true
           stack: container
+
+      - name: "Login to heroku registry"
+        run: heroku container:login
+
+      - name: "Push"
+        run: git push heroku main
