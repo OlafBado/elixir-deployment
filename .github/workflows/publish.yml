@@ -1,20 +1,16 @@
 name: Publish
 
 on:
-  workflow_dispatch:
-    inputs:
-      releaseType:
-        description: 'Where to release staging/prod?'
-        required: true
-        default: 'staging'
+  workflow_run:
+    workflows: "Elixir CI"
+    types:
+      - completed
 
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
 
 jobs:
-  
-  
   staging:
     environment:
       name: staging
