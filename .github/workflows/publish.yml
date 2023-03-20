@@ -1,0 +1,44 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: 'Where to release staging/prod?'
+        required: true
+        default: 'staging'
+
+jobs:
+  env:
+    HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+  
+  staging:
+    environment:
+      name: staging
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
+        with:
+          heroku_api_key: $HEROKU_API_KEY
+          heroku_app_name: random-test-321
+          heroku_email: $HEROKU_EMAIL
+          usedocker: true
+          stack: container
+
+  production:
+    needs: staging
+    runs-on: ubuntu-20.04
+    environment:
+      name: prod
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
+        with:
+          heroku_api_key: $HEROKU_API_KEY
+          heroku_app_name: lit-spire-32171
+          heroku_email: $HEROKU_EMAIL
+          usedocker: true
+          stack: container
+  
