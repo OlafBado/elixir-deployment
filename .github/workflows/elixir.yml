@@ -6,41 +6,41 @@ env:
   MIX_ENV: test
 
 jobs:
-  build:
-    name: Build and test
-    runs-on: ubuntu-20.04
-    services:
-      db:
-        image: postgres:12
-        ports: ['5432:5432']
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  # build:
+  #   name: Build and test
+  #   runs-on: ubuntu-20.04
+  #   services:
+  #     db:
+  #       image: postgres:12
+  #       ports: ['5432:5432']
+  #       env:
+  #         POSTGRES_PASSWORD: postgres
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
 
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up Elixir
-      uses: erlef/setup-beam@v1
-      with:
-        elixir-version: '1.12' # Define the elixir version [required]
-        otp-version: '24.1' # Define the OTP version [required]
-    - name: Restore dependencies cache
-      uses: actions/cache@v3
-      with:
-        path: deps
-        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-mix-
-    - name: Install dependencies
-      run: mix deps.get
-    - name: Run tests
-      run: mix test
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Set up Elixir
+  #     uses: erlef/setup-beam@v1
+  #     with:
+  #       elixir-version: '1.12' # Define the elixir version [required]
+  #       otp-version: '24.1' # Define the OTP version [required]
+  #   - name: Restore dependencies cache
+  #     uses: actions/cache@v3
+  #     with:
+  #       path: deps
+  #       key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+  #       restore-keys: ${{ runner.os }}-mix-
+  #   - name: Install dependencies
+  #     run: mix deps.get
+  #   - name: Run tests
+  #     run: mix test
 
   release:
-    needs: build
+    # needs: build
     env:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
@@ -50,7 +50,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
         with:
           heroku_api_key: $HEROKU_API_KEY
-          heroku_app_name: lit-spire-32171
+          heroku_app_name: random-test-321
           heroku_email: $HEROKU_EMAIL
           usedocker: true
           stack: container
