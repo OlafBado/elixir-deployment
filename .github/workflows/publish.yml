@@ -8,10 +8,12 @@ on:
         required: true
         default: 'staging'
 
+env:
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+
 jobs:
-  env:
-    HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-    HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+  
   
   staging:
     environment:
