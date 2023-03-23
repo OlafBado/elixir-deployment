@@ -4,6 +4,7 @@ on: push
 
 env:
   MIX_ENV: test
+  HELLO: ${{ secrets.HELLO }}
 
 jobs:
   build:
@@ -38,19 +39,3 @@ jobs:
       run: mix deps.get
     - name: Run tests
       run: mix test
-
-  # release:
-  #   # needs: build
-  #   env:
-  #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  #     HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: akhileshns/heroku-deploy@v3.12.13 # This is the action
-  #       with:
-  #         heroku_api_key: $HEROKU_API_KEY
-  #         heroku_app_name: random-test-321
-  #         heroku_email: $HEROKU_EMAIL
-  #         usedocker: true
-  #         stack: container
