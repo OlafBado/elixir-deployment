@@ -34,7 +34,7 @@ if config_env() == :prod do
       """
 
   config :saturn, SaturnWeb.Endpoint,
-    url: [scheme: "https", host: System.get_env("APP_NAME") <> ".herokuapp.com", port: 443],
+    # url: [scheme: "https", host: System.get_env("APP_NAME") <> ".com", port: 443],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.

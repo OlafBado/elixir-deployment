@@ -7,8 +7,8 @@
 # General application configuration
 import Config
 
-config :saturn,
-  ecto_repos: [Saturn.Repo]
+# config :saturn,
+#   ecto_repos: [Saturn.Repo]
 
 # Configures the endpoint
 config :saturn, SaturnWeb.Endpoint,
@@ -48,4 +48,4 @@ config :phoenix, :json_library, Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{config_env()}.exs"
+import_config "#{Mix.env()}.exs"
