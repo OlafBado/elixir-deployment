@@ -39,4 +39,3 @@ jobs:
           heroku_email: $HEROKU_EMAIL
           usedocker: true
           stack: container
-  
