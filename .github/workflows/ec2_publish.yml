@@ -1,0 +1,48 @@
+name: Publish to EC2
+
+# after push to main branch eg. completed pull request,
+# deploy to ec2 instance
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ec2_production:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Create file with SSH key
+        env:
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+        run: |
+          echo "$EC2_SSH_KEY" > ssh_key
+          chmod 600 ssh_key
+
+      - name: Build docker image
+        run: docker build -t saturn_release .
+      
+      - name: Save image to .tar file
+        run: docker save saturn_release -o saturn_release.tar
+      
+      - name: Send built .tar file to VPS
+        run: scp -i ./ssh_key satur_release.tar ${{ secrets.EC2_FQDN }}:~/
+
+      # - name: On VPC, load .tar file to docker image
+      #   run: ssh -i ${{ secrets.VPS_PUBLIC_KEY }} ${{ secrets.VPS_FQDN }} docker load -i saturn_release.tar
+      
+      # - name: On VPC, source environment with variables
+      #   run: source .docker_env
+      
+      # - name: On VPC, stop working containers
+      #   run: docker-compose down
+      
+      # - name: On VPC, start containers
+      #   run: docker-compose up -d
+
+      - name: Check
+        run: |
+          ls -a

@@ -7,8 +7,8 @@
 # General application configuration
 import Config
 
-# config :saturn,
-#   ecto_repos: [Saturn.Repo]
+config :saturn,
+  ecto_repos: [Saturn.Repo]
 
 # Configures the endpoint
 config :saturn, SaturnWeb.Endpoint,
