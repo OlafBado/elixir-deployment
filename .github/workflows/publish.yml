@@ -1,4 +1,6 @@
-name: Publish
+name: Publish to Heroku
+
+# after CI is successfull, deploy to heroku
 
 on:
   workflow_run:
