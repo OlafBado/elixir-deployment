@@ -8,7 +8,7 @@ import Config
 config :saturn, Saturn.Repo,
   username: "postgres",
   password: "postgres",
-  database: "saturn_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "saturn_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10

@@ -32,3 +32,5 @@ saturn-*.tar
 npm-debug.log
 /assets/node_modules/
 *.tar
+.tool-versions
+*.pem
