@@ -7,8 +7,10 @@ on:
   push:
     branches:
       - main
-
-needs: [Elixir CI]
+  workflow_run:
+    workflows: [Elixir CI]
+    types:
+      - completed
 
 jobs:
   ec2_production:
