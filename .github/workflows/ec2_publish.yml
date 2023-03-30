@@ -8,6 +8,8 @@ on:
     branches:
       - main
 
+needs: [Elixir CI]
+
 jobs:
   ec2_production:
     runs-on: ubuntu-22.04
