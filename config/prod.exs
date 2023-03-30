@@ -22,15 +22,15 @@ config :logger, level: :info
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-config :saturn, SaturnWeb.Endpoint,
-  url: [host: "example.com", port: 443],
-  https: [
-    port: 443,
-    otp_app: :saturn
-    cipher_suite: :strong,
-    keyfile: System.get_env("SATURN_SSL_KEY_PATH"),
-    certfile: System.get_env("SATURN_SSL_CERT_PATH")
-  ]
+# config :saturn, SaturnWeb.Endpoint,
+#   url: [host: "example.com", port: 443],
+#   https: [
+#     port: 443,
+#     otp_app: :saturn,
+#     cipher_suite: :strong,
+#     keyfile: System.get_env("SATURN_SSL_KEY_PATH"),
+#     certfile: System.get_env("SATURN_SSL_CERT_PATH")
+#   ]
 
 #
 # The `cipher_suite` is set to `:strong` to support only the
