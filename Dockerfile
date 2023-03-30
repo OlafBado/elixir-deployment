@@ -34,10 +34,6 @@ RUN mix compile
 # copy runtime configuration file
 COPY config/runtime.exs config/ 
 
-# Copy SSL files
-COPY ./server.key ./server.key 
-COPY ./server.crt ./server.crt 
-
 # assemble release
 RUN mix release
 
@@ -66,8 +62,6 @@ USER "elixir"
 
 # copy release executables
 COPY --from=build --chown="elixir":"elixir" /app/_build/"${MIX_ENV}"/rel/saturn ./
-COPY --from=build ./app/server.key ./
-COPY --from=build ./app/server.crt ./
 
 COPY entrypoint.sh .
 
