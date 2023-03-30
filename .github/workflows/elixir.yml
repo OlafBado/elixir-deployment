@@ -12,10 +12,11 @@ jobs:
     runs-on: ubuntu-20.04
     services:
       db:
-        image: postgres:12
+        image: postgres:latest
         ports: ["5432:5432"]
         env:
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: saturn_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
