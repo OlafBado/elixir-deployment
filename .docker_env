@@ -1,5 +1,0 @@
-POOL_SIZE=2
-PORT=1319
-DATABASE_URL=ecto://postgres:supersecret@postgres-server/saturn_prod
-SECRET_KEY_BASE=XCOkWhextwAPsUn6nm0sy3P2Y42fDdPOYBoLNpHWxmsKO4ms6l58B6hjItL78Fan
-APP_NAME=test
