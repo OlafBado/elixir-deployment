@@ -7,18 +7,16 @@ on:
   push:
     branches:
       - main
-  workflow_run:
-    workflows: [Elixir CI]
-    types:
-      - completed
 
 jobs:
   ec2_production:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    env:
+      EC2_FQDN: ${{ secrets.EC2_FQDN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Create file with SSH key
         env:
           EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
@@ -27,26 +25,28 @@ jobs:
           chmod 600 ssh_key
 
       - name: Build docker image
-        run: docker build -t saturn_release .
-      
+        run: docker buildx build -t saturn_release --load .
+
       - name: Save image to .tar file
         run: docker save saturn_release -o saturn_release.tar
-      
+
       - name: Send built .tar file to VPS
-        run: scp -i ./ssh_key satur_release.tar ${{ secrets.EC2_FQDN }}:~/
+        run: scp -i ssh_key -o StrictHostKeyChecking=no saturn_release.tar "$EC2_FQDN":~/
 
-      # - name: On VPC, load .tar file to docker image
-      #   run: ssh -i ${{ secrets.VPS_PUBLIC_KEY }} ${{ secrets.VPS_FQDN }} docker load -i saturn_release.tar
-      
-      # - name: On VPC, source environment with variables
-      #   run: source .docker_env
-      
-      # - name: On VPC, stop working containers
-      #   run: docker-compose down
-      
-      # - name: On VPC, start containers
-      #   run: docker-compose up -d
+      - name: On VPC, load .tar file to docker image
+        run: ssh -i ssh_key $EC2_FQDN sudo docker load -i saturn_release.tar
 
-      - name: Check
+      - name: On VPC, source environment with variables
         run: |
-          ls -a
+          ssh -o StrictHostKeyChecking=no -i ssh_key $EC2_FQDN \
+          "source ~/saturn/.env"
+
+      - name: On VPC, stop working containers
+        run: |
+          ssh -i ssh_key $EC2_FQDN \
+          "cd ~/saturn && sudo docker compose down"
+
+      - name: On VPC, start containers
+        run: |
+          ssh -i ssh_key $EC2_FQDN \
+          "cd ~/saturn && sudo docker compose up -d"
