@@ -1,8 +1,5 @@
 name: Publish to EC2
 
-# after push to main branch eg. completed pull request,
-# deploy to ec2 instance
-
 on:
   push:
     branches:
@@ -10,7 +7,7 @@ on:
 
 jobs:
   ec2_production:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       EC2_FQDN: ${{ secrets.EC2_FQDN }}
     steps:
@@ -25,7 +22,7 @@ jobs:
           chmod 600 ssh_key
 
       - name: Build docker image
-        run: docker buildx build -t saturn_release --load .
+        run: docker buildx build --platform linux/amd64 -t saturn_release --load .
 
       - name: Save image to .tar file
         run: docker save saturn_release -o saturn_release.tar
@@ -33,20 +30,20 @@ jobs:
       - name: Send built .tar file to VPS
         run: scp -i ssh_key -o StrictHostKeyChecking=no saturn_release.tar "$EC2_FQDN":~/
 
-      - name: On VPC, load .tar file to docker image
+      - name: On VPS, load .tar file to docker image
         run: ssh -i ssh_key $EC2_FQDN sudo docker load -i saturn_release.tar
 
-      - name: On VPC, source environment with variables
+      - name: On VPS, source environment with variables
         run: |
           ssh -o StrictHostKeyChecking=no -i ssh_key $EC2_FQDN \
           "source ~/saturn/.env"
 
-      - name: On VPC, stop working containers
+      - name: On VPS, stop working containers
         run: |
           ssh -i ssh_key $EC2_FQDN \
           "cd ~/saturn && sudo docker compose down"
 
-      - name: On VPC, start containers
+      - name: On VPS, start containers
         run: |
           ssh -i ssh_key $EC2_FQDN \
           "cd ~/saturn && sudo docker compose up -d"

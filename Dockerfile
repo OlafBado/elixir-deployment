@@ -38,7 +38,7 @@ COPY config/runtime.exs config/
 RUN mix release
 
 #---------- app stage --------------
-FROM alpine:latest AS app
+FROM alpine:3.15.0 AS app
 
 ARG MIX_ENV
 # install runtime dependencies
