@@ -34,6 +34,6 @@ npm-debug.log
 *.tar
 .tool-versions
 *.pem
-*.env
-*.secrets
+.env
+.secrets
 .docker_env
