@@ -4,7 +4,7 @@ on: push
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: saturn_release
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build_and_push_image:
