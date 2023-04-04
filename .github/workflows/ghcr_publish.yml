@@ -1,6 +1,10 @@
 name: GHCR publish
 
-on: push
+on:
+  push:
+    branches:
+      - main
+      - staging
 
 env:
   REGISTRY: ghcr.io
