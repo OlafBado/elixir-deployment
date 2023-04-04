@@ -43,3 +43,18 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  run_deployment_script_on_vps:
+    runs-on: ubuntu-22.04
+    needs: build_and_push_image
+    env:
+      EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+    steps:
+      - name: Connect to VPS and execute deployment script
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.BACKOFFICE_HOST }}
+          username: ${{ secrets.BACKOFFICE_USER }}
+          key: ${{ secrets.BACKOFFICE_SSH_KEY }}
+          passphrase: ${{ secrets.BACKOFFICE_PASSPHRASE }}
+          script: echo hello there > test.txt
