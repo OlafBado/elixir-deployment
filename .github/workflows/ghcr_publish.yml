@@ -1,10 +1,11 @@
 name: GHCR publish
 
 on:
-  push:
-    branches:
-      - main
-      - staging
+  workflow_run:
+    workflows: ["Elixir CI"]
+    branches: [main, staging]
+    types:
+      - completed
 
 env:
   REGISTRY: ghcr.io
@@ -52,7 +53,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build_and_push_image
     env:
-      EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+      BRANCH: ${{ github.ref_name }}
     steps:
       - name: Connect to VPS and execute deployment script
         uses: appleboy/ssh-action@v0.1.9
@@ -61,4 +62,10 @@ jobs:
           username: ${{ secrets.BACKOFFICE_USER }}
           key: ${{ secrets.BACKOFFICE_SSH_KEY }}
           passphrase: ${{ secrets.BACKOFFICE_PASSPHRASE }}
-          script: echo hello there > test.txt
+          script: |
+            export CR_PAT=${{ secrets.GITHUB_TOKEN}}
+            echo $CR_PAT | docker login ghcr.io -u ${{ secrets.GITHUB_USER }} --password-stdin
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:"$BRANCH"
+            source ~/backoffice/"$BRANCH"/."$BRANCH".env
+            docker compose -f ~/backoffice/"$BRANCH"/docker-compose."$BRANCH".yml down
+            docker compose -f ~/backoffice/"$BRANCH"/docker-compose."$BRANCH".yml up -d
