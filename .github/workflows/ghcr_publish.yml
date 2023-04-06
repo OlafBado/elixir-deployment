@@ -65,7 +65,7 @@ jobs:
           script: |
             export CR_PAT=${{ secrets.GITHUB_TOKEN}}
             echo $CR_PAT | docker login ghcr.io -u ${{ secrets.GITHUB_USER }} --password-stdin
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:"$BRANCH"
-            source ~/backoffice/"$BRANCH"/."$BRANCH".env
-            docker compose -f ~/backoffice/"$BRANCH"/docker-compose."$BRANCH".yml down
-            docker compose -f ~/backoffice/"$BRANCH"/docker-compose."$BRANCH".yml up -d
+            sudo docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+            source ~/backoffice/${{ github.ref_name }}/.env
+            docker compose -f ~/backoffice/${{ github.ref_name }}/docker-compose.${{ github.ref_name }}.yml down
+            docker compose -f ~/backoffice/${{ github.ref_name }}/docker-compose.${{ github.ref_name }}.yml up -d
