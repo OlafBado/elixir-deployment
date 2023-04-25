@@ -3,7 +3,7 @@ name: abc
 on:
   workflow_run:
     workflows: [hello]
-    types: [completed]
+    types: [requested]
     branches: [staging, production]
 
 jobs:
