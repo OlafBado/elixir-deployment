@@ -9,7 +9,7 @@ on:
 jobs:
   hello:
     runs-on: ubuntu-22.04
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'abc' }}
     steps:
       - name: firsta
         run: echo ${{ github.ref_name }}
