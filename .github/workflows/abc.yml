@@ -9,7 +9,7 @@ name: abc
 on: workflow_dispatch
 
 jobs:
-  first:
+  heyy:
     runs-on: ubuntu-22.04
     steps:
       - name: firsta

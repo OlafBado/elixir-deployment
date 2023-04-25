@@ -4,17 +4,18 @@ on: push
 
 jobs:
   first:
+    if: github.ref_name == 'staging' || 'productio'
     runs-on: ubuntu-22.04
     steps:
       - name: abcd
-        run: echo hello
+        run: echo ${{ github.ref_name }}
   second:
     runs-on: ubuntu-22.04
     steps:
       - name: firsta
-        run: echo hello
+        run: echo ${{ github.ref }}
   third:
-    if: github.ref_name == 'staging' || 'production'
+    if: github.ref_name == ('staging' || 'production')
     runs-on: ubuntu-22.04
     needs: [first, second]
     steps:
