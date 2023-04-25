@@ -3,11 +3,20 @@ name: hello
 on: push
 
 jobs:
-  example:
+  first:
     runs-on: ubuntu-22.04
     steps:
       - name: abcd
         run: echo hello
+  second:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: firsta
+        run: exit 1
+  third:
+    runs-on: ubuntu-22.04
+    needs: [first, second]
+    steps:
       - name: Invoke workflow without inputs
         uses: benc-uk/workflow-dispatch@v1
         with:
