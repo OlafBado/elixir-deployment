@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: firsta
-        run: exit 1
+        run: echo hello
   third:
     runs-on: ubuntu-22.04
     needs: [first, second]
