@@ -4,10 +4,12 @@ on:
   workflow_run:
     workflows: [hello]
     types: [completed]
+    branches: [staging, production]
 
 jobs:
   hello:
     runs-on: ubuntu-22.04
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: first
-        run: echo first
+        run: echo ${{ github.ref_name }}
