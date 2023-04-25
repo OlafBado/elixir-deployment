@@ -9,7 +9,7 @@ on:
 jobs:
   hello:
     runs-on: ubuntu-22.04
-    if: ${{github.event.workflow_run.conclusion == 'success' && github.ref_name == 'staging' || github.ref_name == 'production'}}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: first
         run: echo ${{ github.ref_name }}
