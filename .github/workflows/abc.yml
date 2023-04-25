@@ -12,4 +12,4 @@ jobs:
     if: ${{github.event.workflow_run.conclusion == 'success' && github.ref_name == 'staging' || github.ref_name == 'production'}}
     steps:
       - name: first
-        run: echo ${{github.ref_name}}
+        run: echo ${{ github.ref_name }}
