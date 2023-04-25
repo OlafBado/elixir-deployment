@@ -8,3 +8,7 @@ jobs:
     steps:
       - name: abcd
         run: echo hello
+      - name: Invoke workflow without inputs
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: abc.yml

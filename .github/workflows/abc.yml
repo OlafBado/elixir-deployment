@@ -1,10 +1,12 @@
 name: abc
 
-on:
-  workflow_run:
-    workflows: [hello]
-    types: [completed]
-    branches: [staging, production]
+# on:
+#   workflow_run:
+#     workflows: [hello]
+#     types: [completed]
+#     branches: [staging, production]
+
+on: workflow_dispatch
 
 jobs:
   hello:
