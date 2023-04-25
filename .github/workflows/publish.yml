@@ -14,6 +14,7 @@ env:
 
 jobs:
   staging:
+    if: ${{ false }}
     environment:
       name: staging
     runs-on: ubuntu-20.04
@@ -28,6 +29,7 @@ jobs:
           stack: container
 
   production:
+    if: ${{ false }}
     needs: staging
     runs-on: ubuntu-20.04
     environment:

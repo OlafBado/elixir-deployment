@@ -7,6 +7,7 @@ on:
 
 jobs:
   ec2_production:
+    if: ${{ false }}
     runs-on: ubuntu-22.04
     env:
       EC2_FQDN: ${{ secrets.EC2_FQDN }}

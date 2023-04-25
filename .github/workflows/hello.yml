@@ -1,0 +1,10 @@
+name: hello
+
+on: push
+
+jobs:
+  example:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: abcd
+        run: echo hello

@@ -1,0 +1,13 @@
+name: abc
+
+on:
+  workflow_run:
+    workflows: [hello]
+    types: [completed]
+
+jobs:
+  hello:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: first
+        run: echo first

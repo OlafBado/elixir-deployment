@@ -13,7 +13,8 @@ env:
 
 jobs:
   build_and_push_image:
-    runs-on: ubuntu-latest
+    if: ${{ false }}
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,8 +35,8 @@ jobs:
             type=ref,event=branch
             type=sha
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v1
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -50,10 +51,11 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   run_deployment_script_on_vps:
+    if: ${{ false }}
     runs-on: ubuntu-22.04
     needs: build_and_push_image
     env:
-      BRANCH: ${{ github.ref_name }}
+      DIR: ${{ github.ref_name == 'production' && 'prod' || 'staging' }}
     steps:
       - name: Connect to VPS and execute deployment script
         uses: appleboy/ssh-action@v0.1.9
@@ -65,7 +67,7 @@ jobs:
           script: |
             export CR_PAT=${{ secrets.GITHUB_TOKEN}}
             echo $CR_PAT | docker login ghcr.io -u ${{ secrets.GITHUB_USER }} --password-stdin
-            sudo docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-            source ~/backoffice/${{ github.ref_name }}/.env
-            docker compose -f ~/backoffice/${{ github.ref_name }}/docker-compose.${{ github.ref_name }}.yml down
-            docker compose -f ~/backoffice/${{ github.ref_name }}/docker-compose.${{ github.ref_name }}.yml up -d
+            sudo docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DIR }}
+            source ~/backoffice/${{ env.DIR }}/.env
+            docker compose -f ~/backoffice/${{ env.DIR }}/docker-compose.${{ env.DIR }}.yml down
+            docker compose -f ~/backoffice/${{ env.DIR }}/docker-compose.${{ env.DIR }}.yml up -d

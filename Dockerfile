@@ -1,6 +1,6 @@
 ARG MIX_ENV="prod"
 # build stage
-FROM hexpm/elixir:1.14.3-erlang-23.2.6-alpine-3.15.0 AS build 
+FROM hexpm/elixir:1.14.3-erlang-25.3-alpine-3.17.2 AS build 
 # install build dependencies
 RUN apk add --no-cache build-base git python3 curl
 # sets work dir
@@ -38,7 +38,7 @@ COPY config/runtime.exs config/
 RUN mix release
 
 #---------- app stage --------------
-FROM alpine:3.15.0 AS app
+FROM alpine:3.17.2 AS app
 
 ARG MIX_ENV
 # install runtime dependencies

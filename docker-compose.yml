@@ -23,7 +23,7 @@ services:
       timeout: 5s
       retries: 5
   web:
-    image: saturn_release
+    image: niebiel/saturn_release_new
     restart: always
     ports:
       - 4000:1319
