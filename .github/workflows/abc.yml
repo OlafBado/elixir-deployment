@@ -1,16 +1,23 @@
 name: abc
 
-# on:
-#   workflow_run:
-#     workflows: [hello]
-#     types: [completed]
-#     branches: [staging, production]
+on:
+  workflow_run:
+    workflows: [hello]
+    types: [completed]
+    branches: [staging, production]
 
-on: workflow_dispatch
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       hello:
+#         description: "hello"
+#         required: true
+#         type: environment
 
 jobs:
   heyy:
     runs-on: ubuntu-22.04
     steps:
       - name: firsta
-        run: echo ${{ github.ref_name }}
+        run: |
+          echo "Log level: ${{ github.event.inputs.hello }}"

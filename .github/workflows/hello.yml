@@ -4,22 +4,20 @@ on: push
 
 jobs:
   first:
-    if: github.ref_name == 'staging' || 'productio'
     runs-on: ubuntu-22.04
     steps:
       - name: abcd
-        run: echo ${{ github.ref_name }}
+        run: echo ${{ github }}
   second:
     runs-on: ubuntu-22.04
     steps:
       - name: firsta
-        run: echo ${{ github.ref }}
-  third:
-    if: github.ref_name == ('staging' || 'production')
-    runs-on: ubuntu-22.04
-    needs: [first, second]
-    steps:
-      - name: Invoke workflow without inputs
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: abc.yml
+        run: echo ${{ github.event_name }}
+  # third:
+  #   runs-on: ubuntu-22.04
+  #   needs: [first, second]
+  #   steps:
+  #     - name: Invoke workflow
+  #       uses: benc-uk/workflow-dispatch@v1
+  #       with:
+  #         workflow: abc.yml
