@@ -3,8 +3,21 @@ name: hello
 on: push
 
 jobs:
-  example:
+  first:
     runs-on: ubuntu-22.04
     steps:
       - name: abcd
-        run: echo hello
+        run: echo ${{ github }}
+  second:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: firsta
+        run: echo ${{ github.event_name }}
+  # third:
+  #   runs-on: ubuntu-22.04
+  #   needs: [first, second]
+  #   steps:
+  #     - name: Invoke workflow
+  #       uses: benc-uk/workflow-dispatch@v1
+  #       with:
+  #         workflow: abc.yml
