@@ -6,10 +6,17 @@ on:
     types: [completed]
     branches: [staging, production]
 
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       hello:
+#         description: "hello"
+#         required: true
+#         type: environment
+
 jobs:
-  hello:
+  heyy:
     runs-on: ubuntu-22.04
-    if: ${{ github.event.workflow_run.conclusion == 'abc' }}
     steps:
       - name: first
         run: echo ${{ github.ref_name }}
