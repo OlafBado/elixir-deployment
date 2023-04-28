@@ -7,17 +7,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: abcd
-        run: echo ${{ github }}
+        run: echo hello
   second:
     runs-on: ubuntu-22.04
     steps:
       - name: firsta
         run: echo ${{ github.event_name }}
-  # third:
-  #   runs-on: ubuntu-22.04
-  #   needs: [first, second]
-  #   steps:
-  #     - name: Invoke workflow
-  #       uses: benc-uk/workflow-dispatch@v1
-  #       with:
-  #         workflow: abc.yml
+  third:
+    name: third
+    uses: olafbado/elixir-deployment/.github/workflows/abc.yml@staging
+    secrets: inherit
