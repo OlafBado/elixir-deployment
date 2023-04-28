@@ -1,19 +1,25 @@
 name: hello
 
-on: push
+on:
+  push:
+    branches-ignore:
+      - staging
+      - production
+  workflow_call:
 
 jobs:
   first:
     runs-on: ubuntu-22.04
     steps:
       - name: abcd
-        run: echo hello
+        run: echo ${{ github.ref_name }}
   second:
+    needs: [first]
     runs-on: ubuntu-22.04
     steps:
       - name: firsta
-        run: echo ${{ github.event_name }}
-  third:
-    name: third
-    uses: olafbado/elixir-deployment/.github/workflows/abc.yml@staging
-    secrets: inherit
+        run: echo ${{ github.ref }}
+  # third:
+  #   name: third
+  #   uses: olafbado/elixir-deployment/.github/workflows/abc.yml@staging
+  #   secrets: inherit

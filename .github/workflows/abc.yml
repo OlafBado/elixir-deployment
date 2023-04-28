@@ -1,6 +1,8 @@
 name: abc
 
-on: workflow_call
+on:
+  push:
+    branches: [staging, production]
 
 # on:
 #   workflow_run:
@@ -17,8 +19,12 @@ on: workflow_call
 #         type: environment
 
 jobs:
+  nested:
+    uses: olafbado/elixir-deployment/.github/workflows/hello.yml@staging
   heyy:
+    needs:
+      - nested
     runs-on: ubuntu-22.04
     steps:
       - name: first
-        run: echo ${{ github.ref_name }}
+        run: echo ${{ secrets.EXAMPLE }}
